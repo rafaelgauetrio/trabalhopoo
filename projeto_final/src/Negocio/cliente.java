@@ -2,7 +2,7 @@ package Negocio;
 
 public class cliente {
 	private int numero_conta;
-	private conta conta_banco;
+	private conta conta_banco=new conta();
 	private String nome;
 	private double renda;
 	private String endereco;
@@ -12,7 +12,18 @@ public class cliente {
 		return conta_banco.getSaldo(); 
 	}
 	public double deposito(double d){
+		conta_banco.deposito(d);
 		return conta_banco.getSaldo(); 
+	}
+	public void transferencia(cliente cli,double valor){
+		if(valor>conta_banco.getSaldo()){
+			valor=conta_banco.getSaldo();
+		}
+		conta_banco.saque(valor);
+		cli.deposito(valor);
+	}
+	public double getSaldo(){
+		return conta_banco.getSaldo();
 	}
 	public String getNome() {
 		return nome;

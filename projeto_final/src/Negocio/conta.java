@@ -12,9 +12,10 @@ public class conta {
 		saldo = saldo + dep;
 	}
 	public void saque(double saq) {
+		
 		saldo = saldo - saq;
 	}
-
+	
 	public int getNumero() {
 		return numero;
 	}

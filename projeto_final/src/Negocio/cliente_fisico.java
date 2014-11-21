@@ -1,4 +1,4 @@
-package projeto_final;
+package Negocio;
 
 public class cliente_fisico extends cliente{
 	private long cpf;

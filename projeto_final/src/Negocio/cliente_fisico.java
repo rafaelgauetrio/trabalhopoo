@@ -1,21 +1,21 @@
 package Negocio;
 
 public class cliente_fisico extends cliente{
-	private long cpf;
+	private String cpf;
 	private double limite;
 	
 	public cliente_fisico(int id, String nome, double renda, String endereco,
-			long cpf, double limite) {
+			String cpf, double limite) {
 		super(id, nome, renda, endereco);
 		this.cpf = cpf;
 		this.limite = limite;
 	}
 
-	public long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 

@@ -1,12 +1,12 @@
 package Negocio;
 
 public class cliente_juridico extends cliente{
-	private long cnpj;
+	private String cnpj;
 	private double limite;
 	
 
 	public cliente_juridico(int id, String nome, double renda, String endereco,
-			long cnpj, double limite) {
+			String cnpj, double limite) {
 		super(id, nome, renda, endereco);
 		this.cnpj = cnpj;
 		this.limite = limite;
@@ -21,11 +21,11 @@ public class cliente_juridico extends cliente{
 	}
 
 
-	public long getCnpj() {
+	public String getCnpj() {
 		return cnpj;
 	}
 
-	public void setCnpj(long cnpj) {
+	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
 

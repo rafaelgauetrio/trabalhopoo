@@ -2,10 +2,18 @@ package Negocio;
 
 public class cliente {
 	private int numero_conta;
+	private conta conta_banco;
 	private String nome;
 	private double renda;
 	private String endereco;
 	
+	public double saque(double s){
+		this.conta_banco.saque(s);
+		return conta_banco.getSaldo(); 
+	}
+	public double deposito(double d){
+		return conta_banco.getSaldo(); 
+	}
 	public String getNome() {
 		return nome;
 	}

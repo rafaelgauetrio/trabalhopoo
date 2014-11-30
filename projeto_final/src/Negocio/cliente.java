@@ -6,7 +6,7 @@ public class cliente {
 	private String nome;
 	private double renda;
 	private String endereco;
-	
+	private String senha;
 	public double saque(double s){
 		this.conta_banco.saque(s);
 		return conta_banco.getSaldo(); 
@@ -58,7 +58,13 @@ public class cliente {
 	
 	public String toString() {
 		return "cliente [numero_conta=" + numero_conta + ", nome=" + nome
-				+ ", renda=" + renda + ", endereco=" + endereco + "]";
+				+ ", renda=" + renda + ", endereco=" + endereco + ", senha="+senha+"]";
+	}
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 	
 }

@@ -1,10 +1,14 @@
 package Apresentacao;
 
 import java.io.*;
+import java.io.ObjectInputStream.GetField;
 import java.util.*;
+
 import Negocio.*;
+import Persistencia.*;
 public class Teste {
 	public static void main(String[] args) {
+		Conexao con = new Conexao();
 		ArrayList<cliente> cli=new ArrayList<cliente>();
 		Scanner l= new Scanner(System.in);
 		int codigo=0;
@@ -13,26 +17,7 @@ public class Teste {
 		String endereco="";
 		String cpf_cnpj="";
 		double limite=0.0;
-		try {
-			FileReader arq = new FileReader("clientes.txt");
-			BufferedReader lerArq = new BufferedReader(arq);
-			String linha = lerArq.readLine();
-			while (linha != null) { 
-				String dados[]=linha.split(";");
-				if(dados[0].equals("f")){
-					cli.add(new cliente_fisico(Integer.parseInt(dados[1]),dados[2],Double.parseDouble(dados[3]),dados[4],dados[5],Double.parseDouble(dados[6])));
-				}else if(dados[0].equals("j")){
-					cli.add(new cliente_juridico(Integer.parseInt(dados[1]),dados[2],Double.parseDouble(dados[3]),dados[4],dados[5],Integer.parseInt(dados[6])));
-				}
-				linha = lerArq.readLine();
-			}
-			arq.close();
-			
-		} 
-		 catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		cli = con.getClientes();
 		System.out.println("clientes adicionados");
 		for(int i=0;i<cli.size();i++){
 			System.out.println(cli.get(i).getNome());

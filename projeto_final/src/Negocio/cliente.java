@@ -50,10 +50,11 @@ public class cliente {
 		this.numero_conta = numero_conta;
 	}
 	
-	public cliente(int id,String nome, double renda, String endereco) {
+	public cliente(int id,String nome, double renda, String endereco, String senha) {
 		this.nome = nome;
 		this.renda = renda;
 		this.endereco = endereco;
+		this.senha = senha;
 	}
 	
 	public String toString() {

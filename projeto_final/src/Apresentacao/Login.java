@@ -3,18 +3,21 @@ package Apresentacao;
 
 import javax.swing.*;
 
+import Persistencia.Conexao;
+
 import java.awt.*;
 import java.awt.event.*;
 public class Login extends JFrame{
-	JLabel rotulo1, rotulo2, rotulo3;
 	JButton Logar,Cancelar;
 	JTextField txtLogin, txtSenha;
 	JLabel lblLogin, lblSenha;
+	Conexao conexao;
 	public Login(){
 		super("Entre com seus dados");
+		conexao = new Conexao();
 		Container tela = getContentPane();
 		setLayout(null);
-		lblLogin = new JLabel("Login: ");
+		lblLogin = new JLabel("Conta: ");
 		lblSenha = new JLabel("Senha: ");
 		txtLogin = new JTextField();
 		txtSenha = new JPasswordField();
@@ -30,21 +33,30 @@ public class Login extends JFrame{
 		Logar.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
-						TelaPrincipal principal = new TelaPrincipal();
-						principal.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-						principal.setVisible(true);
+						if(conexao.logar(lblLogin.getText(), lblSenha.getText())){
+							TelaPrincipal principal = new TelaPrincipal();
+							principal.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+							principal.setVisible(true);
+						}else{
+							int status = JOptionPane.showConfirmDialog(null,"Erro de autenticação. Deseja cadastrar novo cliente?",
+									"Autenticação",JOptionPane.YES_NO_OPTION);
+							if (status == JOptionPane.YES_OPTION)
+							{
+
+							}	
+						}
 					}
 				}
-		);
-		
+				);
+
 		Cancelar.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						System.exit(0);
 					}
 				}
-		);
-		
+				);
+
 		tela.add(txtLogin);
 		tela.add(txtSenha);
 		tela.add(lblLogin);

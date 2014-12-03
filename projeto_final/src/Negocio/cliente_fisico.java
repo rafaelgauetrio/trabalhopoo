@@ -4,9 +4,9 @@ public class cliente_fisico extends cliente{
 	private String cpf;
 	private double limite;
 	
-	public cliente_fisico(int id, String nome, double renda, String endereco,
+	public cliente_fisico(String nome, double renda, String endereco,
 			String cpf, double limite, String senha) {
-		super(id, nome, renda, endereco, senha);
+		super(nome, renda, endereco, senha);
 		this.cpf = cpf;
 		this.limite = limite;
 	}

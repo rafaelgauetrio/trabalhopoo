@@ -35,17 +35,17 @@ public class CadCliente extends JFrame{
 		Cadastrar = new JButton("Cadastrar"); 
 		Cancelar = new JButton("Cancelar");
 		
-		lblSenha.setBounds(45, 50, 100, 20);
-		lblNome.setBounds(45, 80, 100, 20);
-		lblRenda.setBounds(45, 110, 100, 20);
-		lblEndereco.setBounds(45, 140, 100, 20);
-		lblCpfCnpj.setBounds(45, 170, 100, 20);
+		lblNome.setBounds(45, 50, 100, 20);
+		lblCpfCnpj.setBounds(45, 80, 100, 20);
+		lblEndereco.setBounds(45, 110, 100, 20);
+		lblRenda.setBounds(45, 140, 100, 20);
+		lblSenha.setBounds(45, 170, 100, 20);
 		
-		txtCpfCnpj.setBounds(120, 50, 250, 20);
-		txtSenha.setBounds(120, 80, 250, 20);
+		txtNome.setBounds(120, 50, 250, 20);
+		txtCpfCnpj.setBounds(120, 80, 250, 20);
 		txtEndereco.setBounds(120, 110, 250, 20);
-		txtNome.setBounds(120, 140, 250, 20);
-		txtRenda.setBounds(120, 170, 250, 20);
+		txtRenda.setBounds(120, 140, 250, 20);
+		txtSenha.setBounds(120, 170, 250, 20);
 		
 		Cadastrar.setBounds(120,200,100,20);
 		Cancelar.setBounds(270,200,100,20);

@@ -33,7 +33,7 @@ public class Login extends JFrame{
 		Logar.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
-						if(conexao.logar(lblLogin.getText(), lblSenha.getText())){
+						if(conexao.logar(txtLogin.getText(), txtSenha.getText())){
 							TelaPrincipal principal = new TelaPrincipal();
 							principal.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 							principal.setVisible(true);

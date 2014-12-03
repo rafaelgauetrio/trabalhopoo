@@ -24,9 +24,10 @@ public class Conexao {
 			while (linha != null) { 
 				String dados[]=linha.split(";");
 				if(dados[0].equals("f")){
-					cli.add(new cliente_fisico(Integer.parseInt(dados[1]),dados[2],Double.parseDouble(dados[3]),dados[4],dados[5],Double.parseDouble(dados[6]),dados[7]));
+					//tipo(0) conta(1)  nome(2)   renda(3)  endereco(4)  cpf(5) LIMITE(6)   SENHA(7) 
+					cli.add(new cliente_fisico(dados[2], Double.parseDouble(dados[3]), dados[4], dados[5], Double.parseDouble(dados[6]), dados[7]));
 				}else if(dados[0].equals("j")){
-					cli.add(new cliente_juridico(Integer.parseInt(dados[1]),dados[2],Double.parseDouble(dados[3]),dados[4],dados[5],Integer.parseInt(dados[6]),dados[7]));
+					cli.add(new cliente_juridico(dados[2], Double.parseDouble(dados[3]), dados[4], dados[5], Double.parseDouble(dados[6]), dados[7]));
 				}
 				linha = lerArq.readLine();
 			}
@@ -57,6 +58,7 @@ public class Conexao {
 		try {
 			arq = new FileWriter("clientes.txt");
 			PrintWriter gravarArq = new PrintWriter(arq);
+							//tipo(0)                        conta(1)  nome(2)   renda(3)  endereco(4)  cpf(5)                     LIMITE(6)        SENHA(7) 
 			gravarArq.write((CpfCnpj.length()==14?"j":"f")+";"+Conta+";"+Nome+";"+Renda+";"+Endereco+";"+CpfCnpj+";"+Double.parseDouble(Renda)*0.4+";"+Senha);
 
 			gravarArq.flush();
@@ -76,6 +78,8 @@ public class Conexao {
 				return true;
 			}
 		}
+		if(conta.equals(""))
+			return true;
 		return false;
 	}
 }

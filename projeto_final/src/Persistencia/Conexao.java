@@ -1,6 +1,7 @@
 package Persistencia;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -54,21 +55,45 @@ public class Conexao {
 	}
 
 	public boolean cadastraCliente(String Nome, String Renda,String Endereco, String Conta, String Senha, String CpfCnpj){
-		FileWriter arq;
-		try {
-			arq = new FileWriter("clientes.txt");
-			PrintWriter gravarArq = new PrintWriter(arq);
-							//tipo(0)                        conta(1)  nome(2)   renda(3)  endereco(4)  cpf(5)                     LIMITE(6)        SENHA(7) 
-			gravarArq.write((CpfCnpj.length()==14?"j":"f")+";"+Conta+";"+Nome+";"+Renda+";"+Endereco+";"+CpfCnpj+";"+Double.parseDouble(Renda)*0.4+";"+Senha);
+		try{
+			ArrayList<cliente> cli= getClientes();
+			if(CpfCnpj.length()==14){
+				cli.add(new cliente_fisico(Integer.parseInt(Conta),Nome, Double.parseDouble(Renda), Endereco,CpfCnpj, Double.parseDouble(Renda)*0.4, Senha));
+			}else{
+				cli.add(new cliente_juridico(Integer.parseInt(Conta),Nome, Double.parseDouble(Renda), Endereco,CpfCnpj, Double.parseDouble(Renda)*0.4, Senha));
+	
+			}
+			return SalvaClientes(cli);
+		}catch(Exception e){
+			return false;
+		}
+		
 
-			gravarArq.flush();
+
+	}
+	public boolean SalvaClientes(ArrayList<cliente> cli){
+		try {
+			FileWriter fr = new FileWriter("clientes.txt");
+			BufferedWriter arq = new BufferedWriter(fr);
+			for (int i=0; i<cli.size(); i++){
+				if(cli.get(i) instanceof cliente_fisico){
+					arq.write("f"+";"+ ((cliente_fisico)cli.get(i)).getNumero_conta() + ";" + ((cliente_fisico)cli.get(i)).getNome() + ";" + ((cliente_fisico)cli.get(i)).getRenda()+ ";" +
+							((cliente_fisico)cli.get(i)).getEndereco() + ";" + ((cliente_fisico)cli.get(i)).getCpf() + ";" + ((cliente_fisico)cli.get(i)).getLimite() + ";" + ((cliente_fisico)cli.get(i)).getSenha() + "\n");
+				}else{
+					arq.write("j"+";"+ ((cliente_juridico)cli.get(i)).getNumero_conta() + ";" + ((cliente_juridico)cli.get(i)).getNome() + ";" + ((cliente_juridico)cli.get(i)).getRenda()+ ";" +
+							((cliente_juridico)cli.get(i)).getEndereco() + ";" + ((cliente_juridico)cli.get(i)).getCnpj() + ";" + ((cliente_juridico)cli.get(i)).getLimite() + ";" + ((cliente_juridico)cli.get(i)).getSenha() + "\n");
+				}
+			}
+			arq.close();
+			
+			
+							//tipo(0)                        conta(1)  nome(2)   renda(3)  endereco(4)  cpf(5)                     LIMITE(6)        SENHA(7) 
+
 			return true;
 		}catch(Exception e){
 			return false;
 							
 		}
-
-
 	}
 
 	public boolean contaExiste(String conta) {

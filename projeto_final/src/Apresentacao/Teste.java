@@ -26,7 +26,7 @@ public class Teste {
 		FileWriter arq;
 		try {
 			arq = new FileWriter("clientes.txt");
-			PrintWriter gravarArq = new PrintWriter(arq);
+			PrintWriter gravarArq = new PrintWriter(arq,true);
 			int tipo=0;
 			System.out.println("1-f\n2-j");
 			tipo=l.nextInt();
@@ -46,11 +46,19 @@ public class Teste {
 			System.out.println("limite:");
 			limite=l.nextDouble();
 			
-			if(tipo==1){
-				gravarArq.append("f;"+codigo+";"+nome+";"+renda+";"+endereco+";"+cpf_cnpj+";"+limite);
-			}else if(tipo==2){
-				gravarArq.append("j;"+codigo+";"+nome+";"+renda+";"+endereco+";"+cpf_cnpj+";"+limite);
+			FileWriter fr = new FileWriter("dados.csv");
+			BufferedWriter arq2 = new BufferedWriter(fr);
+			for (int i=0; i<cli.size(); i++){
+				//arq.write(func.elementAt(i).getNome() + ";" + func.elementAt(i).getCod() + ";" + func.elementAt(i).getSal() + ";" + func.elementAt(i).getDep() + ";" + func.elementAt(i).getTemp() + "\n");
 			}
+			arq.close();
+			if(tipo==1){
+				gravarArq.printf("f;"+codigo+";"+nome+";"+renda+";"+endereco+";"+cpf_cnpj+";"+limite);
+			}else if(tipo==2){
+				gravarArq.printf("j;"+codigo+";"+nome+";"+renda+";"+endereco+";"+cpf_cnpj+";"+limite);
+			}
+			gravarArq.printf("sdad");
+
 			gravarArq.flush();
 		} catch (IOException e) {
 			e.printStackTrace();

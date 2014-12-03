@@ -42,7 +42,9 @@ public class Login extends JFrame{
 									"Autenticação",JOptionPane.YES_NO_OPTION);
 							if (status == JOptionPane.YES_OPTION)
 							{
-
+								CadCliente cadCliente= new CadCliente();
+								cadCliente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+								cadCliente.setVisible(true);
 							}	
 						}
 					}

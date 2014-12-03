@@ -47,9 +47,9 @@ public class Teste {
 			limite=l.nextDouble();
 			
 			if(tipo==1){
-				gravarArq.write("f;"+codigo+";"+nome+";"+renda+";"+endereco+";"+cpf_cnpj+";"+limite);
+				gravarArq.append("f;"+codigo+";"+nome+";"+renda+";"+endereco+";"+cpf_cnpj+";"+limite);
 			}else if(tipo==2){
-				gravarArq.write("j;"+codigo+";"+nome+";"+renda+";"+endereco+";"+cpf_cnpj+";"+limite);
+				gravarArq.append("j;"+codigo+";"+nome+";"+renda+";"+endereco+";"+cpf_cnpj+";"+limite);
 			}
 			gravarArq.flush();
 		} catch (IOException e) {

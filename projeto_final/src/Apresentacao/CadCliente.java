@@ -56,7 +56,7 @@ public class CadCliente extends JFrame{
 						Random gerador = new Random();
 						 
 				        gerador.nextInt(10);
-				        String conta="";
+				        String conta="0";
 				        while(conexao.contaExiste(conta))//verifica se conta existe
 				        	conta="0"+gerador.nextInt(10)+""+gerador.nextInt(10)+""+gerador.nextInt(10)+""+gerador.nextInt(10);
 						if(conexao.cadastraCliente(txtNome.getText(), txtRenda.getText(), txtEndereco.getText(), conta, txtSenha.getText(), txtCpfCnpj.getText())){
@@ -101,8 +101,5 @@ public class CadCliente extends JFrame{
 
 		setVisible(true);
 	}
-	public static void main(String args[]){
-		CadCliente app = new CadCliente();
-		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
+	
 }

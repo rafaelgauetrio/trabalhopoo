@@ -5,9 +5,9 @@ public class cliente_juridico extends cliente{
 	private double limite;
 	
 
-	public cliente_juridico(String nome, double renda, String endereco,
+	public cliente_juridico(int conta, String nome, double renda, String endereco,
 			String cnpj, double limite, String senha) {
-		super(nome, renda, endereco, senha);
+		super(conta, nome, renda, endereco, senha);
 		this.cnpj = cnpj;
 		this.limite = limite;
 	}

@@ -25,9 +25,9 @@ public class Conexao {
 				String dados[]=linha.split(";");
 				if(dados[0].equals("f")){
 					//tipo(0) conta(1)  nome(2)   renda(3)  endereco(4)  cpf(5) LIMITE(6)   SENHA(7) 
-					cli.add(new cliente_fisico(dados[2], Double.parseDouble(dados[3]), dados[4], dados[5], Double.parseDouble(dados[6]), dados[7]));
+					cli.add(new cliente_fisico(Integer.parseInt(dados[1]),dados[2], Double.parseDouble(dados[3]), dados[4], dados[5], Double.parseDouble(dados[6]), dados[7]));
 				}else if(dados[0].equals("j")){
-					cli.add(new cliente_juridico(dados[2], Double.parseDouble(dados[3]), dados[4], dados[5], Double.parseDouble(dados[6]), dados[7]));
+					cli.add(new cliente_juridico(Integer.parseInt(dados[1]),dados[2], Double.parseDouble(dados[3]), dados[4], dados[5], Double.parseDouble(dados[6]), dados[7]));
 				}
 				linha = lerArq.readLine();
 			}
@@ -43,7 +43,7 @@ public class Conexao {
 	public boolean logar(String conta, String senha){
 		ArrayList<cliente> cli=getClientes();
 		for (cliente cliente : cli) {
-			if((cliente.getNumero_conta()==Integer.parseInt(conta)) && (cliente.getClass().equals(senha))){
+			if((cliente.getNumero_conta()==Integer.parseInt(conta)) && (cliente.getSenha().equals(senha))){
 				return true;
 			}
 			if(Integer.parseInt(conta)==0)
@@ -72,13 +72,14 @@ public class Conexao {
 	}
 
 	public boolean contaExiste(String conta) {
+		
 		ArrayList<cliente> cli=getClientes();
 		for (cliente cliente : cli) {
 			if(cliente.getNumero_conta()==Integer.parseInt(conta)){
 				return true;
 			}
 		}
-		if(conta.equals(""))
+		if(conta.equals("0"))
 			return true;
 		return false;
 	}

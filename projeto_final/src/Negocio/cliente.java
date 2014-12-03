@@ -55,6 +55,7 @@ public class cliente {
 		this.renda = renda;
 		this.endereco = endereco;
 		this.senha = senha;
+		this.numero_conta = conta;
 	}
 	
 	public String toString() {

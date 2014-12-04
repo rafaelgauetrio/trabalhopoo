@@ -9,7 +9,7 @@ import Persistencia.*;
 public class Teste {
 	public static void main(String[] args) {
 		Conexao con = new Conexao();
-		ArrayList<cliente> cli=new ArrayList<cliente>();
+		ArrayList<Cliente> cli=new ArrayList<Cliente>();
 		Scanner l= new Scanner(System.in);
 		int codigo=0;
 		String nome="";

@@ -11,7 +11,7 @@ public class TelaPrincipal extends JFrame{
 	JMenuItem saque, deposito, transferencia,extrato,saldo;
 	JPanel panel;
 	public TelaPrincipal(){
-		super("Terminal bancário R&R");
+		super("Terminal bancário RGCS");
 		Container tela = getContentPane();
 		setLayout(null);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);

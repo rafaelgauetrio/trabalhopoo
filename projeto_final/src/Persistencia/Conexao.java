@@ -9,14 +9,14 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import Negocio.cliente;
-import Negocio.cliente_fisico;
-import Negocio.cliente_juridico;
+import Negocio.Cliente;
+import Negocio.ClienteFisico;
+import Negocio.ClienteJuridico;
 
 public class Conexao {
-	public String ContaLogada="";
-	public ArrayList<cliente> getClientes(){
-		ArrayList<cliente> cli=new ArrayList<cliente>();
+	public int ContaLogada=0;
+	public ArrayList<Cliente> getClientes(){
+		ArrayList<Cliente> cli=new ArrayList<Cliente>();
 
 		try {
 			FileReader arq = new FileReader("clientes.txt");
@@ -26,9 +26,9 @@ public class Conexao {
 				String dados[]=linha.split(";");
 				if(dados[0].equals("f")){
 					//tipo(0) conta(1)  nome(2)   renda(3)  endereco(4)  cpf(5) LIMITE(6)   SENHA(7) 
-					cli.add(new cliente_fisico(Integer.parseInt(dados[1]),dados[2], Double.parseDouble(dados[3]), dados[4], dados[5], Double.parseDouble(dados[6]), dados[7]));
+					cli.add(new ClienteFisico(Integer.parseInt(dados[1]),dados[2], Double.parseDouble(dados[3]), dados[4], dados[5], Double.parseDouble(dados[6]), dados[7], Double.parseDouble(dados[8])));
 				}else if(dados[0].equals("j")){
-					cli.add(new cliente_juridico(Integer.parseInt(dados[1]),dados[2], Double.parseDouble(dados[3]), dados[4], dados[5], Double.parseDouble(dados[6]), dados[7]));
+					cli.add(new ClienteJuridico(Integer.parseInt(dados[1]),dados[2], Double.parseDouble(dados[3]), dados[4], dados[5], Double.parseDouble(dados[6]), dados[7], Double.parseDouble(dados[8])));
 				}
 				linha = lerArq.readLine();
 			}
@@ -38,13 +38,14 @@ public class Conexao {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-		return new ArrayList<cliente>();
+		return new ArrayList<Cliente>();
 	}
 
 	public boolean logar(String conta, String senha){
-		ArrayList<cliente> cli=getClientes();
-		for (cliente cliente : cli) {
+		ArrayList<Cliente> cli=getClientes();
+		for (Cliente cliente : cli) {
 			if((cliente.getNumero_conta()==Integer.parseInt(conta)) && (cliente.getSenha().equals(senha))){
+				ContaLogada=cliente.getNumero_conta();
 				return true;
 			}
 			if(Integer.parseInt(conta)==0)
@@ -56,11 +57,11 @@ public class Conexao {
 
 	public boolean cadastraCliente(String Nome, String Renda,String Endereco, String Conta, String Senha, String CpfCnpj){
 		try{
-			ArrayList<cliente> cli= getClientes();
+			ArrayList<Cliente> cli= getClientes();
 			if(CpfCnpj.length()==14){
-				cli.add(new cliente_fisico(Integer.parseInt(Conta),Nome, Double.parseDouble(Renda), Endereco,CpfCnpj, Double.parseDouble(Renda)*0.4, Senha));
+				cli.add(new ClienteFisico(Integer.parseInt(Conta),Nome, Double.parseDouble(Renda), Endereco,CpfCnpj, Double.parseDouble(Renda)*0.4, Senha,0));
 			}else{
-				cli.add(new cliente_juridico(Integer.parseInt(Conta),Nome, Double.parseDouble(Renda), Endereco,CpfCnpj, Double.parseDouble(Renda)*0.4, Senha));
+				cli.add(new ClienteJuridico(Integer.parseInt(Conta),Nome, Double.parseDouble(Renda), Endereco,CpfCnpj, Double.parseDouble(Renda)*0.4, Senha,0));
 	
 			}
 			return SalvaClientes(cli);
@@ -71,17 +72,17 @@ public class Conexao {
 
 
 	}
-	public boolean SalvaClientes(ArrayList<cliente> cli){
+	public boolean SalvaClientes(ArrayList<Cliente> cli){
 		try {
 			FileWriter fr = new FileWriter("clientes.txt");
 			BufferedWriter arq = new BufferedWriter(fr);
 			for (int i=0; i<cli.size(); i++){
-				if(cli.get(i) instanceof cliente_fisico){
-					arq.write("f"+";"+ ((cliente_fisico)cli.get(i)).getNumero_conta() + ";" + ((cliente_fisico)cli.get(i)).getNome() + ";" + ((cliente_fisico)cli.get(i)).getRenda()+ ";" +
-							((cliente_fisico)cli.get(i)).getEndereco() + ";" + ((cliente_fisico)cli.get(i)).getCpf() + ";" + ((cliente_fisico)cli.get(i)).getLimite() + ";" + ((cliente_fisico)cli.get(i)).getSenha() + "\n");
+				if(cli.get(i) instanceof ClienteFisico){
+					arq.write("f"+";"+ ((ClienteFisico)cli.get(i)).getNumero_conta() + ";" + ((ClienteFisico)cli.get(i)).getNome() + ";" + ((ClienteFisico)cli.get(i)).getRenda()+ ";" +
+							((ClienteFisico)cli.get(i)).getEndereco() + ";" + ((ClienteFisico)cli.get(i)).getCpf() + ";" + ((ClienteFisico)cli.get(i)).getLimite() + ";" + ((ClienteFisico)cli.get(i)).getSenha() + ";" + ((ClienteFisico)cli.get(i)).getSaldo()+ "\n");
 				}else{
-					arq.write("j"+";"+ ((cliente_juridico)cli.get(i)).getNumero_conta() + ";" + ((cliente_juridico)cli.get(i)).getNome() + ";" + ((cliente_juridico)cli.get(i)).getRenda()+ ";" +
-							((cliente_juridico)cli.get(i)).getEndereco() + ";" + ((cliente_juridico)cli.get(i)).getCnpj() + ";" + ((cliente_juridico)cli.get(i)).getLimite() + ";" + ((cliente_juridico)cli.get(i)).getSenha() + "\n");
+					arq.write("j"+";"+ ((ClienteJuridico)cli.get(i)).getNumero_conta() + ";" + ((ClienteJuridico)cli.get(i)).getNome() + ";" + ((ClienteJuridico)cli.get(i)).getRenda()+ ";" +
+							((ClienteJuridico)cli.get(i)).getEndereco() + ";" + ((ClienteJuridico)cli.get(i)).getCnpj() + ";" + ((ClienteJuridico)cli.get(i)).getLimite() + ";" + ((ClienteJuridico)cli.get(i)).getSenha() + ";" + ((ClienteJuridico)cli.get(i)).getSaldo()+ "\n");
 				}
 			}
 			arq.close();
@@ -96,16 +97,16 @@ public class Conexao {
 		}
 	}
 
-	public boolean contaExiste(String conta) {
+	public Cliente getConta(String conta) {
 		
-		ArrayList<cliente> cli=getClientes();
-		for (cliente cliente : cli) {
+		ArrayList<Cliente> cli=getClientes();
+		for (Cliente cliente : cli) {
 			if(cliente.getNumero_conta()==Integer.parseInt(conta)){
-				return true;
+				return cliente;
 			}
 		}
 		if(conta.equals("0"))
-			return true;
-		return false;
+			return new Cliente(0, "", 0, "", "",0,0);
+		return null;
 	}
 }

@@ -57,17 +57,13 @@ public class CadCliente extends JFrame{
 						 
 				        gerador.nextInt(10);
 				        String conta="0";
-				        while(conexao.contaExiste(conta))//verifica se conta existe
+				        while(conexao.getConta(conta)!=null)//verifica se conta existe
 				        	conta="0"+gerador.nextInt(10)+""+gerador.nextInt(10)+""+gerador.nextInt(10)+""+gerador.nextInt(10);
 						if(conexao.cadastraCliente(txtNome.getText(), txtRenda.getText(), txtEndereco.getText(), conta, txtSenha.getText(), txtCpfCnpj.getText())){
 							JOptionPane.showMessageDialog(null, "Conta n° "+conta+" criada com sucesso!");
 						}else{
-							int status = JOptionPane.showConfirmDialog(null,"Erro de autenticação. Deseja cadastrar novo cliente?",
-									"Autenticação",JOptionPane.YES_NO_OPTION);
-							if (status == JOptionPane.YES_OPTION)
-							{
-									
-							}	
+							JOptionPane.showMessageDialog(null, "Erro ao Criar a conta!");
+
 						}
 					}
 				}

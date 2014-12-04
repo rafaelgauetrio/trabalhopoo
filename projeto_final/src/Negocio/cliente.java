@@ -1,29 +1,35 @@
 package Negocio;
 
-public class cliente {
+public class Cliente {
 	private int numero_conta;
-	private conta conta_banco=new conta();
 	private String nome;
 	private double renda;
 	private String endereco;
 	private String senha;
+	private double limite; 
+	private double saldo;
+	public double getLimite() {
+		return limite;
+	}
+
+	public void setLimite(double limite){
+		this.limite = limite;
+	}
+
 	public double saque(double s){
-		this.conta_banco.saque(s);
-		return conta_banco.getSaldo(); 
+		this.saldo-=s;
+		return saldo; 
 	}
 	public double deposito(double d){
-		conta_banco.deposito(d);
-		return conta_banco.getSaldo(); 
+		this.saldo+=d;
+		return saldo; 
 	}
-	public void transferencia(cliente cli,double valor){
-		if(valor>conta_banco.getSaldo()){
-			valor=conta_banco.getSaldo();
-		}
-		conta_banco.saque(valor);
+	public void transferencia(Cliente cli,double valor){
+		this.saque(valor);
 		cli.deposito(valor);
 	}
 	public double getSaldo(){
-		return conta_banco.getSaldo();
+		return saldo;
 	}
 	public String getNome() {
 		return nome;
@@ -50,12 +56,14 @@ public class cliente {
 		this.numero_conta = numero_conta;
 	}
 	
-	public cliente(int conta, String nome, double renda, String endereco, String senha) {
+	public Cliente(int conta, String nome, double renda, String endereco, String senha, double limite, double saldo) {
 		this.nome = nome;
 		this.renda = renda;
 		this.endereco = endereco;
 		this.senha = senha;
 		this.numero_conta = conta;
+		this.limite = limite;
+		this.saldo = saldo;
 	}
 	
 	public String toString() {
@@ -68,5 +76,10 @@ public class cliente {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
+	}
+	
 	
 }

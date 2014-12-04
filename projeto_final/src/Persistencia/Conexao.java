@@ -14,7 +14,7 @@ import Negocio.ClienteFisico;
 import Negocio.ClienteJuridico;
 
 public class Conexao {
-	public int ContaLogada=0;
+	public String ContaLogada="";
 	public ArrayList<Cliente> getClientes(){
 		ArrayList<Cliente> cli=new ArrayList<Cliente>();
 
@@ -45,7 +45,7 @@ public class Conexao {
 		ArrayList<Cliente> cli=getClientes();
 		for (Cliente cliente : cli) {
 			if((cliente.getNumero_conta()==Integer.parseInt(conta)) && (cliente.getSenha().equals(senha))){
-				ContaLogada=cliente.getNumero_conta();
+				ContaLogada=String.valueOf(cliente.getNumero_conta());
 				return true;
 			}
 			if(Integer.parseInt(conta)==0)

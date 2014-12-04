@@ -1,8 +1,12 @@
 package Apresentacao;
 import javax.swing.*;
 
+import Negocio.Cliente;
+import Persistencia.Conexao;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 public class TelaPrincipal extends JFrame{
 	
 	
@@ -10,7 +14,7 @@ public class TelaPrincipal extends JFrame{
 	JMenu  operacoes,relatorios, sair;
 	JMenuItem saque, deposito, transferencia,extrato,saldo;
 	JPanel panel;
-	public TelaPrincipal(){
+	public TelaPrincipal(final String conta){
 		super("Terminal bancário RGCS");
 		Container tela = getContentPane();
 		setLayout(null);
@@ -35,6 +39,33 @@ public class TelaPrincipal extends JFrame{
 		relatorios.add(extrato);
 		relatorios.add(saldo);
 		
+		saque.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						Saque saque = new Saque(conta);
+						saque.setDefaultCloseOperation(EXIT_ON_CLOSE);
+						saque.setVisible(true);
+					}
+				}
+				);
+		deposito.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						Deposito deposito = new Deposito(conta);
+						deposito.setDefaultCloseOperation(EXIT_ON_CLOSE);
+						deposito.setVisible(true);
+					}
+				}
+				);
+		transferencia.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						Tranferencia tranferencia = new Tranferencia(conta);
+						tranferencia.setDefaultCloseOperation(EXIT_ON_CLOSE);
+						tranferencia.setVisible(true);
+					}
+				}
+				);
 		
 		
 	}

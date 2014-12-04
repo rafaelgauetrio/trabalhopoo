@@ -41,17 +41,22 @@ public class Deposito extends JFrame{
 		Confirma.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
+						try{
 
-						ArrayList<Cliente> clientes = conexao.getClientes();
-						Cliente cli = conexao.getConta(conta);
-						double saldo=cli.deposito(Double.parseDouble(txtValor.getText()));
-						JOptionPane.showMessageDialog(null, "Deposito feito com sucesso. Novo Saldo: R$ "+saldo);
-						for (int i = 0; i < clientes.size(); i++) {
-							if(clientes.get(i).getNumero_conta()==cli.getNumero_conta())
-								clientes.set(i, cli);
+							ArrayList<Cliente> clientes = conexao.getClientes();
+							Cliente cli = conexao.getConta(conta);
+							double saldo=cli.deposito(Double.parseDouble(txtValor.getText()));
+							JOptionPane.showMessageDialog(null, "Deposito feito com sucesso. Novo Saldo: R$ "+saldo);
+							for (int i = 0; i < clientes.size(); i++) {
+								if(clientes.get(i).getNumero_conta()==cli.getNumero_conta())
+									clientes.set(i, cli);
+							}
+							conexao.SalvaClientes(clientes);
+
+						}catch(Exception e2 ){
+							JOptionPane.showMessageDialog(null, "Erro ao fazer operação");
+
 						}
-						conexao.SalvaClientes(clientes);
-
 					}
 				}
 				);
@@ -77,9 +82,5 @@ public class Deposito extends JFrame{
 
 		setVisible(true);
 	}
-	public static void main(String[] args) {
-		Deposito saque = new Deposito("1357");
-		saque.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		saque.setVisible(true);
-	}
+
 }

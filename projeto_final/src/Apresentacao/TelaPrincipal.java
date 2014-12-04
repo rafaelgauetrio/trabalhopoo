@@ -66,7 +66,25 @@ public class TelaPrincipal extends JFrame{
 					}
 				}
 				);
-		
+		saldo.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						Conexao con = new Conexao();
+						Cliente cli = con.getConta(conta);
+						JOptionPane.showMessageDialog(null,"Seu saldo é de R$ " +cli.getSaldo());
+					}
+				}
+				);
+		saldo.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						Extrato extrato = new Extrato(conta);
+						extrato.setDefaultCloseOperation(EXIT_ON_CLOSE);
+						extrato.setVisible(true);
+						
+					}
+				}
+				);
 		
 	}
 	

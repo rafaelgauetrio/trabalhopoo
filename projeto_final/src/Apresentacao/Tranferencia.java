@@ -4,6 +4,7 @@ package Apresentacao;
 import javax.swing.*;
 
 import Negocio.Cliente;
+import Negocio.Historico;
 import Persistencia.Conexao;
 
 import java.awt.*;
@@ -53,13 +54,21 @@ public class Tranferencia extends JFrame{
 							ArrayList<Cliente> clientes = conexao.getClientes();
 							Cliente cli = conexao.getConta(conta);
 							Cliente cli2 = conexao.getConta(txtConta.getText());
+							ArrayList<Historico> historicos = conexao.getHistorico();
+							Historico historico = null;
+							Historico historico2 = null;
 							if (!cli2.equals(null)) {
 
 								if (txtSenha.getText().equals(cli.getSenha())) {
 									if(cli.getSaldo()+cli.getLimite()>Double.parseDouble(txtValor.getText())){
 										double saldo=cli.saque(Double.parseDouble(txtValor.getText()));
-										cli2.deposito(Double.parseDouble(txtValor.getText()));
+										historico= new Historico(Integer.parseInt(conta), "S", Double.parseDouble(txtValor.getText()), saldo);
+
+										double saldo2 = cli2.deposito(Double.parseDouble(txtValor.getText()));
+										historico2= new Historico(cli2.getNumero_conta(), "E", Double.parseDouble(txtValor.getText()), saldo2);
+
 										JOptionPane.showMessageDialog(null, "Transferência realizada com sucesso. Saldo atual: R$ "+saldo);
+										
 									}else {
 										JOptionPane.showMessageDialog(null, "Saldo insuficiente!");
 									}
@@ -69,6 +78,11 @@ public class Tranferencia extends JFrame{
 										if(clientes.get(i).getNumero_conta()==cli2.getNumero_conta())
 											clientes.set(i, cli2);
 									}
+									if ((!historico.equals(null)) && (!historico2.equals(null))){
+										historicos.add(historico);
+										historicos.add(historico2);
+									}
+									conexao.SalvaHistoricos(historicos);
 									conexao.SalvaClientes(clientes);
 								}else{
 									JOptionPane.showMessageDialog(null, "Senha não confere!");

@@ -4,6 +4,7 @@ package Apresentacao;
 import javax.swing.*;
 
 import Negocio.Cliente;
+import Negocio.Historico;
 import Persistencia.Conexao;
 
 import java.awt.*;
@@ -48,10 +49,15 @@ public class Saque extends JFrame{
 						try{
 							ArrayList<Cliente> clientes = conexao.getClientes();
 							Cliente cli = conexao.getConta(conta);
+							
+							ArrayList<Historico> historicos = conexao.getHistorico();
+							Historico historico = null;
 							if (txtSenha.getText().equals(cli.getSenha())) {
 								if(cli.getSaldo()+cli.getLimite()>Double.parseDouble(txtValor.getText())){
 									double saldo=cli.saque(Double.parseDouble(txtValor.getText()));
 									JOptionPane.showMessageDialog(null, "Saque feito com sucesso. Saldo atual: R$ "+saldo);
+									historico= new Historico(Integer.parseInt(conta), "S", Double.parseDouble(txtValor.getText()), saldo);
+
 								}else {
 									JOptionPane.showMessageDialog(null, "Saldo insuficiente!");
 								}
@@ -59,6 +65,9 @@ public class Saque extends JFrame{
 									if(clientes.get(i).getNumero_conta()==cli.getNumero_conta())
 										clientes.set(i, cli);
 								}
+								if (!historico.equals(null))
+									historicos.add(historico);
+								conexao.SalvaHistoricos(historicos);
 								conexao.SalvaClientes(clientes);
 							}else{
 								JOptionPane.showMessageDialog(null, "Senha não confere!");
@@ -66,7 +75,7 @@ public class Saque extends JFrame{
 							}
 						}catch(Exception e2 ){
 							JOptionPane.showMessageDialog(null, "Erro ao fazer operação");
-
+							e2.printStackTrace();
 						}
 					}
 				}

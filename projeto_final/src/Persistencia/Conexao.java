@@ -12,6 +12,7 @@ import java.util.Scanner;
 import Negocio.Cliente;
 import Negocio.ClienteFisico;
 import Negocio.ClienteJuridico;
+import Negocio.Historico;
 
 public class Conexao {
 	public String ContaLogada="";
@@ -39,6 +40,28 @@ public class Conexao {
 			e.printStackTrace();
 		}
 		return new ArrayList<Cliente>();
+	}
+	public ArrayList<Historico> getHistorico(){
+		ArrayList<Historico> his=new ArrayList<Historico>();
+
+		try {
+			FileReader arq = new FileReader("historico.txt");
+			BufferedReader lerArq = new BufferedReader(arq);
+			String linha = lerArq.readLine();
+			while (linha != null) { 
+				String dados[]=linha.split(";");
+					//tipo(0) conta(1)  nome(2)   renda(3)  endereco(4)  cpf(5) LIMITE(6)   SENHA(7) 
+					his.add(new Historico(Integer.parseInt(dados[0]),dados[1], Double.parseDouble(dados[2]), Double.parseDouble(dados[3])));
+				
+				linha = lerArq.readLine();
+			}
+			arq.close();
+			return his;
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<Historico>();
 	}
 
 	public boolean logar(String conta, String senha){
@@ -96,7 +119,23 @@ public class Conexao {
 							
 		}
 	}
-
+	public boolean SalvaHistoricos(ArrayList<Historico> his){
+		try {
+			FileWriter fr = new FileWriter("historico.txt");
+			BufferedWriter arq = new BufferedWriter(fr);
+			for (int i=0; i<his.size(); i++){
+			
+					arq.write((his.get(i)).getConta() + ";" + his.get(i).getOperacao()+";"+his.get(i).getValor()+";"+his.get(i).getSaldo()+ "\n");
+				
+			}
+			arq.close();
+			
+			return true;
+		}catch(Exception e){
+			return false;
+							
+		}
+	}
 	public Cliente getConta(String conta) {
 		
 		ArrayList<Cliente> cli=getClientes();

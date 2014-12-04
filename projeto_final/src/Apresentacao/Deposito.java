@@ -4,6 +4,7 @@ package Apresentacao;
 import javax.swing.*;
 
 import Negocio.Cliente;
+import Negocio.Historico;
 import Persistencia.Conexao;
 
 import java.awt.*;
@@ -45,12 +46,19 @@ public class Deposito extends JFrame{
 
 							ArrayList<Cliente> clientes = conexao.getClientes();
 							Cliente cli = conexao.getConta(conta);
+							ArrayList<Historico> historicos = conexao.getHistorico();
+							Historico historico = null;
 							double saldo=cli.deposito(Double.parseDouble(txtValor.getText()));
 							JOptionPane.showMessageDialog(null, "Deposito feito com sucesso. Novo Saldo: R$ "+saldo);
+							historico= new Historico(Integer.parseInt(conta), "E", Double.parseDouble(txtValor.getText()), saldo);
+
 							for (int i = 0; i < clientes.size(); i++) {
 								if(clientes.get(i).getNumero_conta()==cli.getNumero_conta())
 									clientes.set(i, cli);
 							}
+							if (!historico.equals(null))
+								historicos.add(historico);
+							conexao.SalvaHistoricos(historicos);
 							conexao.SalvaClientes(clientes);
 
 						}catch(Exception e2 ){
